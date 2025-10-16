@@ -1,0 +1,63 @@
+/* Tailwind v4 core */
+@import "tailwindcss";
+@reference "tailwindcss";
+
+/* Theme tokens */
+:root{
+  --bg:#f9f5ec;
+  --ink:#0a0e18;
+  --ink-2:#2f3640;
+  --panel:rgba(255,255,255,.9);
+  --ring:rgba(124,10,2,.35);
+}
+
+html,body{ background:var(--bg); color:var(--ink); }
+
+/* Simple helpers */
+.text-ink  { color: var(--ink); }
+.text-ink2 { color: var(--ink-2); }
+
+/* Focus */
+:where(a,button,input,textarea,select):focus-visible{
+  outline:2px solid var(--ring);
+  outline-offset:2px;
+  border-radius:.75rem;
+}
+
+/* Reduce motion */
+@media (prefers-reduced-motion:reduce){
+  *{ animation-duration:.001ms!important; animation-iteration-count:1!important; transition:none!important; }
+}
+
+/* Components — only @apply **utility** classes, not custom ones */
+.card {
+  @apply rounded-2xl bg-[var(--panel)] border border-black/10 shadow-[0_8px_24px_rgba(0,0,0,.08)];
+}
+
+/* Base button (optional utility bundle) */
+.btn {
+  @apply inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold transition;
+}
+
+/* Variants must NOT @apply .btn (custom class). Inline the utilities + differences instead. */
+.btn-primary {
+  @apply inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold transition;
+  @apply bg-[#9f0c0c] text-white hover:brightness-110;
+}
+
+.btn-ghost {
+  @apply inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold transition;
+  @apply bg-white text-[#7C0A02] border border-black/10 hover:bg-white/90;
+}
+
+.eyebrow { @apply text-xs uppercase tracking-widest; }
+
+/* Animations */
+@keyframes fall { 0%{transform:translateY(-10vh) rotate(0)} 100%{transform:translateY(120vh) rotate(360deg)} }
+@keyframes sway { 0%,100%{transform:translateX(0)} 50%{transform:translateX(28px)} }
+@keyframes floatY { 0%,100%{transform:translateY(0)} 50%{transform:translateY(12px)} }
+@keyframes pulse-glow {
+  0%,100% { box-shadow: 0 0 0 rgba(255,191,73,0.4); transform: scale(1); }
+  50%     { box-shadow: 0 0 8px rgba(255,191,73,0.6); transform: scale(1.03); }
+}
+.animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
