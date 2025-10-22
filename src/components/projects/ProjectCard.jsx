@@ -2,52 +2,36 @@
 
 export default function ProjectCard({ title, year, blurb, tags = [], image, link, status }) {
   return (
-    <a
-      href={link || "#"}
-      className="group block rounded-2xl bg-[var(--panel)] ring-1 ring-black/5 shadow-[0_8px_24px_rgba(0,0,0,.06)] hover:shadow-[0_12px_32px_rgba(0,0,0,.1)] transition-all duration-300 overflow-hidden"
-    >
-      {/* Project image */}
+    <a href={link || "#"} className="card" style={{display:"block", overflow:"hidden", borderRadius:24, transition:"box-shadow .25s ease"}}>
       {image && (
-        <div className="overflow-hidden">
+        <div style={{overflow:"hidden"}}>
           <img
             src={image}
             alt={title}
-            className="h-52 w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            style={{height:224, width:"100%", objectFit:"cover", transform:"scale(1)", transition:"transform .5s ease"}}
+            className="project-img"
           />
         </div>
       )}
-
-      {/* Content */}
-      <div className="p-5">
-        <div className="flex items-center justify-between mb-2">
-          <div className="text-sm text-ink2">{year}</div>
-
-          {/* Status Badge */}
-          {status && (
-            <span className="inline-flex items-center gap-1 text-xs font-medium text-amber-800 bg-amber-100 rounded-full px-2 py-1 animate-pulse-glow">
-              <span className="text-lg leading-none">🔧</span> {status}
-            </span>
-          )}
+      <div style={{padding:20}}>
+        <div style={{display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:8}}>
+          <div className="text-ink2" style={{fontSize:14}}>{year}</div>
+          {status && <span className="badge badgeBrand">🔧 {status}</span>}
         </div>
-
-        <h3 className="text-lg font-semibold text-ink group-hover:text-[#7C0A02] transition-colors">
-          {title}
-        </h3>
-        <p className="mt-2 text-sm text-ink2">{blurb}</p>
-
+        <h3 style={{margin:"4px 0 0 0", fontWeight:800, fontSize:18}} className="text-ink">{title}</h3>
+        <p style={{marginTop:8}} className="text-ink2">{blurb}</p>
         {tags.length > 0 && (
-          <div className="mt-3 flex flex-wrap gap-2">
-            {tags.map((tag) => (
-              <span
-                key={tag}
-                className="text-xs rounded-full bg-white/70 ring-1 ring-black/5 px-2 py-1 text-ink2"
-              >
-                {tag}
-              </span>
+          <div style={{display:"flex", flexWrap:"wrap", gap:8, marginTop:12}}>
+            {tags.map((t) => (
+              <span key={t} className="badge">{t}</span>
             ))}
           </div>
         )}
       </div>
+      <style jsx>{`
+        a.card:hover { box-shadow: var(--shadow-lg); }
+        a.card:hover .project-img { transform: scale(1.03); }
+      `}</style>
     </a>
   );
 }

@@ -1,19 +1,23 @@
 import "./globals.css";
-import { Inter, Noto_Serif_SC } from "next/font/google";
+import { Nunito } from "next/font/google";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
-const noto = Noto_Serif_SC({ weight: ["600","700"], subsets: ["latin"], variable: "--font-noto", display: "swap" });
+const nunito = Nunito({
+  subsets: ["latin"],
+  weight: ["400","600","700","800"],
+  variable: "--font-sans"
+});
 
 export const metadata = {
-  title: "Aileen Portfolio",
-  description: "Aesthetic, informative portfolio by Aileen Aryeetey",
-  icons: [{ rel: "icon", url: "/favicon.ico" }],
+  title: "Aileen — Portfolio",
+  description: "UI/UX Designer • Creative Technologist",
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${inter.variable} ${noto.variable}`}>
-      <body className="font-[var(--font-inter)] antialiased">{children}</body>
+    <html lang="en" className={nunito.variable}>
+      <body style={{ fontFamily: "var(--font-sans), ui-sans-serif, system-ui" }}>
+        {children}
+      </body>
     </html>
   );
 }

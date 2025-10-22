@@ -57,65 +57,66 @@ export default function ChatWidget() {
     }
   }
 
+  const bubble = {
+    maxWidth:"85%", borderRadius:14, padding:"8px 10px", border:"1px solid rgba(0,0,0,.1)"
+  };
+
   return (
-    <div className="fixed bottom-6 right-6 z-50">
+    <div style={{position:"fixed", bottom:24, right:24, zIndex:60}}>
       {!open ? (
         <button
           onClick={() => setOpen(true)}
-          className="h-14 w-14 rounded-full bg-[#9f0a0a] text-white shadow-lg hover:brightness-110"
+          className="btn btnPrimary"
+          style={{height:56, width:56, borderRadius:"50%", padding:0, boxShadow:"var(--shadow-lg)"}}
           aria-label="Open chat"
         >
           💬
         </button>
       ) : (
-        <div className="w-[22rem] md:w-[24rem] h-[28rem] rounded-2xl bg-[var(--panel)] border border-black/10 shadow-[0_12px_30px_rgba(0,0,0,.15)] overflow-hidden">
-          <div className="flex items-center justify-between px-3 py-2 bg-white/70 border-b border-black/10">
-            <div className="font-semibold text-ink">Ask Aileen’s AI</div>
-            <button onClick={() => setOpen(false)} className="text-ink2 hover:text-ink">✕</button>
+        <div className="card" style={{width:360, height:440, borderRadius:20, overflow:"hidden"}}>
+          <div style={{display:"flex", alignItems:"center", justifyContent:"space-between", padding:"8px 12px", background:"#fff", borderBottom:"1px solid rgba(0,0,0,.1)"}}>
+            <div style={{fontWeight:600}}>Ask Aileen’s AI</div>
+            <button onClick={() => setOpen(false)} className="btn btnGhost" style={{padding:"6px 10px"}}>✕</button>
           </div>
 
-          <div ref={listRef} className="h-[19rem] overflow-y-auto p-3 space-y-2">
+          <div ref={listRef} style={{height:300, overflowY:"auto", padding:12, display:"grid", gap:8}}>
             {messages.map((m, i) => (
               <div
                 key={i}
-                className={`max-w-[85%] rounded-xl px-3 py-2 ${
-                  m.role === "user"
-                    ? "ml-auto bg-[#9f0a0a] text-white"
-                    : "bg-white/90 border border-black/10 text-ink"
-                }`}
+                style={{
+                  ...bubble,
+                  marginLeft: m.role === "user" ? "auto" : 0,
+                  background: m.role === "user" ? "linear-gradient(180deg, var(--brand) 0%, #ff4e90 100%)" : "rgba(255,255,255,.9)",
+                  color: m.role === "user" ? "#fff" : "inherit",
+                }}
               >
                 {m.content}
               </div>
             ))}
             {busy && (
-              <div className="max-w-[85%] rounded-xl px-3 py-2 bg-white/90 border border-black/10 text-ink">
+              <div style={{...bubble, background:"rgba(255,255,255,.9)"}}>
                 Typing…
               </div>
             )}
           </div>
 
-          <div className="p-2 border-t border-black/10 bg-white/60 space-y-2">
+          <div style={{padding:10, borderTop:"1px solid rgba(0,0,0,.1)", background:"rgba(255,255,255,.8)"}}>
             {error && (
-              <div className="text-xs text-red-700 bg-red-50 border border-red-200 rounded-lg px-2 py-1">
+              <div style={{fontSize:12, color:"#7f1d1d", background:"#fee2e2", border:"1px solid #fecaca", borderRadius:10, padding:"6px 8px", marginBottom:8}}>
                 {error}
               </div>
             )}
-            <div className="flex gap-2">
+            <div style={{display:"flex", gap:8}}>
               <textarea
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={onKeyDown}
                 placeholder="Ask about Aileen’s projects or study abroad…"
                 rows={2}
-                className="flex-1 resize-none rounded-lg border border-black/10 bg-white/90 px-3 py-2"
+                className="field"
+                style={{resize:"none"}}
               />
-              <button
-                onClick={sendMessage}
-                disabled={busy}
-                className="rounded-lg bg-[#9f0a0a] px-4 text-white font-semibold disabled:opacity-60"
-              >
-                Send
-              </button>
+              <button onClick={sendMessage} disabled={busy} className="btn btnPrimary">Send</button>
             </div>
           </div>
         </div>

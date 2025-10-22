@@ -1,7 +1,6 @@
 "use client";
 
-import Blossoms from "../components/decor/Blossoms";
-import Lanterns from "../components/decor/Lanterns";
+import Bubbles from "../components/decor/Bubbles";
 import Container from "../components/layout/container";
 import Section from "../components/layout/Section";
 import ProjectCard from "../components/projects/ProjectCard";
@@ -12,7 +11,7 @@ const PROFILE = {
   name: "Aileen Aryeetey",
   tag: "UI/UX Designer • Creative Technologist",
   blurb:
-    "I design clean, human interfaces with a soft aesthetic and clear writing. I add small, helpful AI when it improves the experience.",
+    "I design human, calm interfaces with clear writing. I add small, helpful AI when it truly improves the experience.",
   email: "naaayele04@gmail.com",
   location: "New Jersey • USA",
 };
@@ -51,63 +50,62 @@ const ABROAD = {
 };
 
 export default function Home() {
+  // make a small helper so styles aren't repeated
+  const inputStyle = {
+    border: "1px solid rgba(0,0,0,.1)",
+    borderRadius: 12,
+    padding: "10px 12px",
+  };
   return (
-    <div className="relative min-h-screen">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 -z-20"
-        style={{
-          background:
-            "linear-gradient(180deg, #fff7ed 0%, #f9f5ec 40%, transparent 100%)",
-        }}
-      />
-      <Blossoms count={26} />
-      <Lanterns />
+    <div style={{position:"relative", minHeight:"100vh"}}>
+      <Bubbles count={10} />
 
-      <header className="sticky top-0 z-20 backdrop-blur bg-white/70 shadow-lg shadow-black/5">
-        <Container className="flex items-center justify-between py-3">
-          <div className="flex items-center gap-3">
-            <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-yellow-300/90 ring-1 ring-black/5">
-              <span className="font-bold text-[#7C0A02]">AA</span>
-            </span>
-            <span className="font-semibold">{PROFILE.name}</span>
-          </div>
-          <nav className="hidden md:flex items-center gap-6 text-sm">
-            <a href="#about" className="text-ink2 hover:text-ink">About</a>
-            <a href="#projects" className="text-ink2 hover:text-ink">Projects</a>
-            <a href="#abroad" className="text-ink2 hover:text-ink">Study Abroad</a>
-            <a href="#contact" className="text-ink2 hover:text-ink">Contact</a>
+      {/* NAV */}
+      <header className="navPillBar">
+        <Container>
+          <nav className="navPills">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#projects">Projects</a>
+            <a href="#abroad">Study Abroad</a>
+            <a href="#contact">Contact</a>
+            <a href="/Aileen_Resume.pdf" className="btn btnPrimary" style={{marginLeft:8}}>Résumé</a>
           </nav>
         </Container>
       </header>
 
       {/* HERO */}
       <Section id="home">
-        <div className="p-6 md:p-10 card backdrop-blur-sm">
-          <h1 className="text-4xl md:text-6xl font-bold text-ink">{PROFILE.name}</h1>
-          <p className="mt-3 inline-flex rounded-full bg-amber-100 px-3 py-1 text-sm font-medium text-ink">
-            {PROFILE.tag}
-          </p>
-          <p className="mt-5 max-w-xl text-ink2">{PROFILE.blurb}</p>
-          <div className="mt-6 flex flex-wrap gap-3">
-            <a href="#projects" className="btn-primary">See Projects</a>
-            <a href="#contact" className="btn-ghost">Get in Touch</a>
-            <a href="/Aileen_Resume.pdf" className="btn-ghost">Download Résumé</a>
+        <div className="card" style={{padding:"28px 24px", position:"relative", overflow:"hidden"}}>
+          <div aria-hidden style={{position:"absolute", right:-40, top:-40, width:200, height:200, borderRadius:"50%", background:"#ffeaf4", filter:"blur(24px)", opacity:.7}} />
+          <div aria-hidden style={{position:"absolute", left:-60, bottom:-60, width:260, height:260, borderRadius:"50%", background:"#efeaff", filter:"blur(24px)", opacity:.7}} />
+          <div className="grid" style={{gridTemplateColumns:"1fr", gap:24}}>
+            <div>
+              <span className="badge badgeBrand pulseSoft">✨ Open to opportunities</span>
+              <h1 className="h1" style={{marginTop:12}}>{PROFILE.name}</h1>
+              <p className="badge badgeSoft" style={{marginTop:8}}>{PROFILE.tag}</p>
+              <p className="text-ink2" style={{marginTop:16, maxWidth:640}}>{PROFILE.blurb}</p>
+              <div style={{display:"flex", gap:12, flexWrap:"wrap", marginTop:20}}>
+                <a href="#projects" className="btn btnPrimary">See Projects</a>
+                <a href="#contact"  className="btn btnGhost">Get in Touch</a>
+                <a href="/Aileen_Resume.pdf" className="btn btnGhost">Download Résumé</a>
+              </div>
+            </div>
           </div>
         </div>
       </Section>
 
       {/* ABOUT */}
       <Section id="about" title="About" eyebrow="Profile">
-        <div className="grid gap-4 md:grid-cols-3">
+        <div className="grid grid-3">
           {[
             ["Human-first UX", "I favor clarity and comfort. Every screen should feel calm and obvious."],
             ["Clear writing", "Words are UI. I prefer simple language and meaningful labels."],
             ["Helpful AI", "I add AI where it truly helps—summaries, better wording, and guidance."],
           ].map(([h, p]) => (
-            <div key={h} className="card p-5">
-              <div className="font-semibold text-ink">{h}</div>
-              <p className="mt-1 text-sm text-ink2">{p}</p>
+            <div key={h} className="card" style={{padding:20}}>
+              <div style={{fontWeight:600}} className="text-ink">{h}</div>
+              <p style={{marginTop:6}} className="text-ink2">{p}</p>
             </div>
           ))}
         </div>
@@ -115,49 +113,50 @@ export default function Home() {
 
       {/* PROJECTS */}
       <Section id="projects" title="Projects" eyebrow="Selected Work">
-        <div className="grid gap-6 md:grid-cols-2">
-          {PROJECTS.map((p) => (
-            <ProjectCard key={p.title} {...p} />
-          ))}
+        <div className="grid grid-2">
+          {PROJECTS.map((p) => <ProjectCard key={p.title} {...p} />)}
         </div>
       </Section>
 
       {/* STUDY ABROAD */}
       <Section id="abroad" title="Study Abroad: China" eyebrow="WKU • 2025">
-        <p className="max-w-2xl text-ink2">{ABROAD.blurb}</p>
-        <div className="mt-8">
+        <p className="text-ink2" style={{maxWidth:700}}>{ABROAD.blurb}</p>
+        <div style={{marginTop:24}}>
           <Gallery columns={3} images={ABROAD.images} />
         </div>
       </Section>
 
       {/* CONTACT */}
-      <Section id="contact" title="Contact" eyebrow="Let’s talk">
-        <div className="grid gap-6 md:grid-cols-2">
-          <div className="card p-5">
-            <div>
-              <span className="font-medium">Email:</span>{" "}
-              <a href={`mailto:${PROFILE.email}`} className="underline underline-offset-2">
-                {PROFILE.email}
-              </a>
-            </div>
-            <div className="mt-2 text-sm text-ink2">{PROFILE.location}</div>
-          </div>
+<Section id="contact" title="Contact" eyebrow="Let’s talk">
+  <div className="grid grid-2">
+    <div className="card" style={{padding:20}}>
+      <form
+        action="https://formspree.io/f/REPLACE_ME"
+        method="POST"
+        className="card"
+        style={{ padding: 20, display: "grid", gap: 12 }}
+      >
+        <input name="name" required placeholder="Your name" style={inputStyle} />
+        <input type="email" name="email" required placeholder="Your email" style={inputStyle} />
+        <textarea name="message" required rows={4} placeholder="Your message" style={inputStyle} />
+        <button className="btn btnPrimary">Send</button>
+      </form>
+    </div>
 
-          <form
-            action="https://formspree.io/f/REPLACE_ME"
-            method="POST"
-            className="card p-5 grid gap-3"
-          >
-            <input name="name" required placeholder="Your name" className="rounded-lg border border-black/10 px-3 py-2" />
-            <input type="email" name="email" required placeholder="Your email" className="rounded-lg border border-black/10 px-3 py-2" />
-            <textarea name="message" required rows={4} placeholder="Your message" className="rounded-lg border border-black/10 px-3 py-2" />
-            <button className="btn-primary">Send</button>
-          </form>
-        </div>
-        <footer className="mt-10 text-center text-sm text-ink2">
-          © {new Date().getFullYear()} {PROFILE.name} — Inspired by Chinese design and modern UX
-        </footer>
-      </Section>
+    <div className="card" style={{padding:20}}>
+      <div style={{fontWeight:600}} className="text-ink">Contact</div>
+      <p className="text-ink2" style={{marginTop:6}}>{PROFILE.email}</p>
+      <p className="text-ink2" style={{marginTop:6}}>{PROFILE.location}</p>
+      <div style={{marginTop:12}}>
+        <a href="/Aileen_Resume.pdf" className="btn btnGhost">Download Résumé</a>
+      </div>
+    </div>
+  </div>
+
+  <footer style={{marginTop:40, textAlign:"center", fontSize:14}} className="text-ink2">
+    © {new Date().getFullYear()} {PROFILE.name} — Cute, professional, and human-centered
+  </footer>
+</Section>
 
       <ChatWidget />
     </div>
