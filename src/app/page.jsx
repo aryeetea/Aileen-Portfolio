@@ -10,8 +10,9 @@ import ChatWidget from "../components/ai/ChatWidget";
 const PROFILE = {
   name: "Aileen Aryeetey",
   tag: "UI/UX Designer • Creative Technologist",
-  blurb:
-    "I design human, calm interfaces with clear writing. I add small, helpful AI when it truly improves the experience.",
+  blurb: `
+ My name is Aileen Aryeetey. I’m 21 years old, and I aspire to be a UI/UX designer. I love designing calm, human-centered interfaces that feel clear and natural. I like adding small, thoughtful touches of AI when they genuinely make things easier or more enjoyable.
+`,
   email: "naaayele04@gmail.com",
   location: "New Jersey • USA",
 };
@@ -22,7 +23,7 @@ const PROJECTS = [
     year: "2025",
     blurb: "A mood tracking PWA with friendly avatars and a clean dashboard.",
     tags: ["PWA", "Figma", "AI"],
-    image: "/projects/moodmuse.png",
+    image: "/projects/MoodMuse.png",
     link: "#",
     status: "In Progress",
   },
@@ -31,7 +32,7 @@ const PROJECTS = [
     year: "2025",
     blurb: "A nostalgic messenger with themes (Anime, Gaming, Sports, Movie).",
     tags: ["Flutter", "Mobile UI"],
-    image: "/projects/retroim.png",
+    image: "/projects/Retroim.png",
     link: "#",
     status: "In Progress",
   },
@@ -96,20 +97,20 @@ export default function Home() {
       </Section>
 
       {/* ABOUT */}
-      <Section id="about" title="About" eyebrow="Profile">
-        <div className="grid grid-3">
-          {[
-            ["Human-first UX", "I favor clarity and comfort. Every screen should feel calm and obvious."],
-            ["Clear writing", "Words are UI. I prefer simple language and meaningful labels."],
-            ["Helpful AI", "I add AI where it truly helps—summaries, better wording, and guidance."],
-          ].map(([h, p]) => (
-            <div key={h} className="card" style={{padding:20}}>
-              <div style={{fontWeight:600}} className="text-ink">{h}</div>
-              <p style={{marginTop:6}} className="text-ink2">{p}</p>
-            </div>
-          ))}
-        </div>
-      </Section>
+<Section id="about" title="About" eyebrow="Profile">
+  <div className="grid grid-3">
+    {[
+      ["Name", "Aileen Aryeetey (艾予昭)"],
+      ["Birthday", "March 26, 2002"],
+      ["Fun Fact", "I love designing software in an artistic way."],
+    ].map(([h, p]) => (
+      <div key={h} className="card" style={{padding:20}}>
+        <div style={{fontWeight:600}} className="text-ink">{h}</div>
+        <p style={{marginTop:6}} className="text-ink2">{p}</p>
+      </div>
+    ))}
+  </div>
+</Section>
 
       {/* PROJECTS */}
       <Section id="projects" title="Projects" eyebrow="Selected Work">
