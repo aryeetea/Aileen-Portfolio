@@ -12,6 +12,12 @@ export const metadata = {
   description: "UI/UX Designer • Creative Technologist",
 };
 
+// ✅ mobile viewport so everything scales nicely
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={nunito.variable}>

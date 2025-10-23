@@ -9,7 +9,7 @@ const client = new OpenAI({
 
 async function run() {
   const r = await client.chat.completions.create({
-    model: "llama-3.3-70b-versatile", // or "llama-3.1-8b-instant"
+    model: "llama-3.1-70b-versatile",   // <— use a model from the live list
     messages: [{ role: "user", content: "Say hello from Groq!" }],
   });
   console.log(r.choices[0].message.content);
