@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect } from "react";
+
 import Bubbles from "../components/decor/Bubbles";
 import Container from "../components/layout/container";
 import Section from "../components/layout/Section";
@@ -7,7 +9,7 @@ import ProjectCard from "../components/projects/ProjectCard";
 import Gallery from "../components/abroad/Gallery";
 import ChatWidget from "../components/ai/ChatWidget";
 
-// ✅ use the single source of truth
+// ✅ single source of truth
 import { PROFILE, PROJECTS, ABROAD } from "@/content/site";
 
 export default function Home() {
@@ -16,6 +18,56 @@ export default function Home() {
     borderRadius: 12,
     padding: "10px 12px",
   };
+
+  // 🔥 highlight the active nav link (pink) on click + scroll
+  useEffect(() => {
+    const sectionIds = ["home", "about", "projects", "abroad", "contact"];
+
+    const navLinks = Array.from(document.querySelectorAll('.navPills a[href^="#"]'));
+    const footerLinks = Array.from(document.querySelectorAll('.footerNav a[href^="#"]'));
+    const allLinks = [...navLinks, ...footerLinks];
+
+    const setActive = (id) => {
+      allLinks.forEach((a) => {
+        const href = a.getAttribute("href");
+        a.classList.toggle("active", href === `#${id}`);
+      });
+    };
+
+    const onClick = (e) => {
+      const href = e.currentTarget.getAttribute("href");
+      const id = href?.slice(1);
+      if (id) setActive(id);
+    };
+    allLinks.forEach((a) => a.addEventListener("click", onClick));
+
+    // scroll-based highlighting
+    const obs = new IntersectionObserver(
+      (entries) => {
+        const visible = entries.filter((e) => e.isIntersecting);
+        if (!visible.length) return;
+        // choose the one most in view
+        const topMost = visible.sort(
+          (a, b) => b.intersectionRatio - a.intersectionRatio
+        )[0];
+        setActive(topMost.target.id);
+      },
+      { root: null, rootMargin: "-40% 0px -50% 0px", threshold: [0.25, 0.6, 0.9] }
+    );
+
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) obs.observe(el);
+    });
+
+    // initial state
+    setActive("home");
+
+    return () => {
+      obs.disconnect();
+      allLinks.forEach((a) => a.removeEventListener("click", onClick));
+    };
+  }, []);
 
   return (
     <div style={{ position: "relative", minHeight: "100vh" }}>
@@ -53,7 +105,6 @@ export default function Home() {
               <h1 className="h1" style={{ marginTop: 12 }}>{PROFILE.name}</h1>
               <p className="badge badgeSoft" style={{ marginTop: 8 }}>{PROFILE.tag}</p>
               <p className="text-ink2" style={{ marginTop: 16, maxWidth: 640 }}>
-                {/* warmer, human blurb from your site.js */}
                 {PROFILE.blurb}
               </p>
               <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginTop: 20 }}>
@@ -102,7 +153,7 @@ export default function Home() {
         <div className="grid grid-2">
           <div className="card" style={{ padding: 20 }}>
             <form
-              action="https://formspree.io/f/REPLACE_ME"  // <- swap to your real Formspree endpoint
+              action="https://formspree.io/f/REPLACE_ME"
               method="POST"
               className="card"
               style={{ padding: 20, display: "grid", gap: 12 }}

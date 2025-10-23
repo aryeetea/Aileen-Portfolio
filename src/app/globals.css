@@ -197,3 +197,21 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .footerNav { display:flex; gap:12px; flex-wrap: wrap; }
 .footerNav a { color: var(--ink-2); text-decoration: none; padding: 6px 10px; border-radius: 999px; }
 .footerNav a:hover { background:#fff; }
+
+.navPills a {
+  color: var(--ink);
+  text-decoration: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  transition: all 0.25s ease;
+}
+
+.navPills a:hover {
+  background: rgba(255, 192, 203, 0.2); /* light pink hover */
+}
+
+.navPills a.active {
+  background: #ffc4dd; /* soft pink bubble */
+  color: #fff;
+  font-weight: 600;
+}

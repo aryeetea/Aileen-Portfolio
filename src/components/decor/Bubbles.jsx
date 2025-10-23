@@ -1,12 +1,14 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
 
+/**
+ * Soft floating pastel bubbles.
+ * Renders nothing on the server; randomizes after mount on the client.
+ */
 export default function Bubbles({ count = 10 }) {
-  // don’t render on the server
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
-  // generate random positions once after mount
   const items = useMemo(() => {
     if (!mounted) return [];
     return Array.from({ length: count }, () => ({
@@ -18,7 +20,7 @@ export default function Bubbles({ count = 10 }) {
     }));
   }, [mounted, count]);
 
-  if (!mounted) return null; // server renders null; client hydrates null → then paints bubbles
+  if (!mounted) return null;
 
   return (
     <div aria-hidden style={{ pointerEvents: "none", position: "absolute", inset: 0, zIndex: -1 }}>
